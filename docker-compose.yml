@@ -1,0 +1,29 @@
+version: "3"
+  services:
+    app:
+      build: ./
+      container_name: SmartQuizApp
+      ports:
+        - 8080:8080
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-cmu7qpug1b2c73efov8g-a.oregon-postgres.render.com:5432/database_smartquiz
+        SPRING_DATASOURCE_PASSWORD: 64pN1I5bDuQ6oemajMiHpQIAU56w88di
+        SPRING_DATASOURCE_USERNAME: database_smartquiz_user
+      depends_on:
+        - db
+      networks:
+        - smartquiz-api
+    db:
+      image: postgres:latest
+      container_name: postgresDB2
+      ports:
+        - 5432:5432
+      environment:
+        POSTGRES_USER: database_smartquiz_user
+        POSTGRES_PASSWORD: 64pN1I5bDuQ6oemajMiHpQIAU56w88di
+        POSTGRES_DB: database_smartquiz
+      networks:
+        - smartquiz-api
+  networks:
+    smartquiz-api:
+    driver: bridge
